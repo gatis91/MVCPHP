@@ -1,0 +1,29 @@
+<?php
+
+class Users extends Controller{
+    protected function index(){
+        $viewmodel=new UserModel();
+        $this->ReturnView($viewmodel->Index(), true);
+    }
+    protected function register(){
+        $viewmodel=new UserModel();
+        $this->ReturnView($viewmodel->register(), true);
+    }
+    protected function login(){
+        $viewmodel=new UserModel();
+        $this->ReturnView($viewmodel->login(), true);
+    }
+    protected function logout(){
+        unset($_SESSION["is_logged_in"]);
+        unset($_SESSION["user_data"]);
+        session_destroy();
+        header('Location: '.ROOT_URL);
+    }
+    protected function mypage(){
+        $viewmodel=new ShareModel();
+        
+       
+        $this->ReturnView($viewmodel->my_posts($_SESSION["user_data"]["id"]), true);
+
+    }
+}
